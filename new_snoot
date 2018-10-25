@@ -1,0 +1,40 @@
+#!/bin/sh
+Snoot="$1"
+Snoot_Root="/www/snoot.club/snoots"
+
+cd "$Snoot_Root"
+
+Existing_User="$(</etc/passwd awk -F: '{print $1}' | grep -e "^$Snoot\$")"
+
+if [ -z "$Existing_User" ]; then
+	./say creating user
+
+	sudo useradd -m -d "/snoots/$Snoot" -g common -G common,undercommon -s /bin/nologin "$Snoot"
+else
+	./say user "$Snoot" existed m8, hope that\'s ok\!
+fi
+
+echo enter their ssh key pls:
+
+read -r Public_Key
+
+./say creating authorized_keys file on host
+
+sudo mkdir -p "/snoots/$Snoot/.ssh"
+sudo sh -c "echo $Public_Key >> /snoots/$Snoot/.ssh/authorized_keys"
+sudo chmod -R 755 "/snoots/$Snoot/.ssh"
+sudo chown -R root.root "/snoots/$Snoot/.ssh"
+
+./say containing snoot
+
+/www/snoot.club/contain_snoot "$Snoot" "$Public_Key"
+
+sudo chown -R "$Snoot.common" "$Snoot_Root/$Snoot/application/website"
+
+./say binding snoots
+
+/www/snoot.club/bind_snoots
+
+./say reloading nginx
+
+sudo nginx -s reload
