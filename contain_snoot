@@ -115,6 +115,7 @@ server {
 server {
   listen 80;
   listen [::]:80;
+  server_name $Snoot.snoot.club;
   return 301 https://$Snoot.snoot.club/\$request_uri;
 }
 nginxconf
