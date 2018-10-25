@@ -10,7 +10,7 @@ Web_Port="$(($Ssh_Port + 1))"
 
 cd "$Snoot_Root"
 
-cp -r "$Skeleton_Snoot" "$Snoot"
+rsync -av "$Skeleton_Snoot/" "$Snoot/"
 
 cd "$Snoot/application"
 
