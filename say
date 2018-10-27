@@ -1,8 +1,0 @@
-#!/bin/sh
-debug_mode="${DEBUG-yes}"
-
-if [ ! -z "$debug_mode" ]; then
-	echo
-	echo "$*"
-	echo
-fi

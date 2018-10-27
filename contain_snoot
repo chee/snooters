@@ -14,7 +14,7 @@ rsync -av "$Skeleton_Snoot/" "$Snoot/"
 
 cd "$Snoot/application"
 
-./say generating package json
+
 
 >package.json cat <<packagejson
 {
@@ -32,13 +32,13 @@ cd "$Snoot/application"
 }
 packagejson
 
-./say installing javascript dependencies
+
 
 npm install micro serve-handler
 
 >authorized_keys echo $Public_Key
 
-./say generating index html
+
 
 >website/index.html cat <<indexhtml
 <!doctype html>
@@ -61,7 +61,7 @@ indexhtml
 
 cd ..
 
-./say generating docker compose
+
 
 >docker-compose.yml cat <<dockercomposeyml
 version: "3"
@@ -80,11 +80,11 @@ services:
     command: "/application/.start.sh"
 dockercomposeyml
 
-./say starting docker container
+
 
 docker-compose up -d
 
-./say generating nginx config
+
 
 >nginx.conf cat <<nginxconf
 server {
@@ -120,6 +120,6 @@ server {
 }
 nginxconf
 
-./say updating last_snoot_port
+
 
 echo $Web_Port > /www/snoot.club/last_snoot_port
